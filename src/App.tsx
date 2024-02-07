@@ -1,7 +1,12 @@
-import "./App.css";
+import "./App.scss";
+import HeaderFeature from "./components/HeaderFeature/HeaderFeature";
 
 function App() {
-   return <></>;
+   return (
+      <>
+         <HeaderFeature />
+      </>
+   );
 }
 
 export default App;
