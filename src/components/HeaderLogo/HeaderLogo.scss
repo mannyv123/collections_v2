@@ -1,13 +1,24 @@
+@use "../../styles/partials/mixins" as *;
+
 .logo {
    display: flex;
    align-items: center;
    gap: 0.5rem;
 
    &__image {
-      width: 2.25rem;
+      width: 1.5rem;
+
+      @include desktop {
+         width: 2.25rem;
+      }
    }
 
    &__text {
       text-transform: uppercase;
+      font-size: 1.5rem;
+
+      @include desktop {
+         font-size: 2rem;
+      }
    }
 }

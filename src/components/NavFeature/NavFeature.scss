@@ -1,4 +1,70 @@
+@use "../../styles/partials/mixins" as *;
+
 .nav {
    display: flex;
-   gap: 0.5rem;
+   position: relative;
+
+   &__icon-container {
+      display: flex;
+      align-items: center;
+      width: fit-content;
+
+      @include desktop {
+         display: none;
+      }
+   }
+
+   &__actions {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      position: absolute;
+      bottom: -6rem;
+      right: 0;
+
+      @include desktop {
+         flex-direction: row;
+
+         position: static;
+         bottom: auto;
+         right: auto;
+      }
+
+      &--closed {
+         height: 0;
+         overflow: hidden;
+
+         @include desktop {
+            height: fit-content;
+         }
+      }
+   }
+
+   &__action-button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      border-radius: 0.3rem;
+      padding: 0.5rem 1.5rem;
+
+      @include desktop {
+         border: 1px solid black;
+      }
+
+      &:hover {
+         background-color: #f8f2f2;
+      }
+
+      &--sign-up {
+         background-color: #0e2869;
+         color: white;
+         text-wrap: nowrap;
+
+         &:hover {
+            color: black;
+         }
+      }
+   }
 }
