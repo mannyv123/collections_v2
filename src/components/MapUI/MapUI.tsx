@@ -9,6 +9,24 @@ function MapUI() {
       zoom: 2,
    });
 
+   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+
+   useEffect(() => {
+      const handleResize = () => {
+         setScreenWidth(window.innerWidth);
+      };
+
+      window.addEventListener("resize", handleResize);
+
+      return () => window.removeEventListener("resize", handleResize);
+   }, []);
+
+   useEffect(() => {
+      if (screenWidth <= 768) {
+         setViewState({ ...viewState, zoom: 0.5 });
+      }
+   }, [screenWidth]);
+
    const geoControlRef = useRef<mapboxgl.GeolocateControl>(null);
 
    useEffect(() => {
@@ -30,7 +48,8 @@ function MapUI() {
                ref={geoControlRef}
                showUserLocation={true}
                fitBoundsOptions={{ maxZoom: 2 }}
-               style={{ position: "absolute", top: "5rem", right: "3rem", margin: 0 }}
+               style={{ marginRight: "3rem" }}
+               position='bottom-right'
             />
          </Map>
       </div>
