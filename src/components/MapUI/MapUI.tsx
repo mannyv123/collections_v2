@@ -1,45 +1,21 @@
-import { useEffect, useRef, useState } from "react";
+import { RefObject } from "react";
+import { MapView } from "../../lib/types";
 import "./MapUI.scss";
-import Map, { GeolocateControl } from "react-map-gl";
+import Map, { GeolocateControl, ViewStateChangeEvent } from "react-map-gl";
 
-function MapUI() {
-   const [viewState, setViewState] = useState({
-      latitude: 49.285283,
-      longitude: -123.115044,
-      zoom: 2,
-   });
+type MapUIProps = {
+   viewState: MapView;
+   handleViewChange: (e: ViewStateChangeEvent) => void;
+   geoControlRef: RefObject<mapboxgl.GeolocateControl>;
+};
 
-   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
-
-   useEffect(() => {
-      const handleResize = () => {
-         setScreenWidth(window.innerWidth);
-      };
-
-      window.addEventListener("resize", handleResize);
-
-      return () => window.removeEventListener("resize", handleResize);
-   }, []);
-
-   useEffect(() => {
-      if (screenWidth <= 768) {
-         setViewState({ ...viewState, zoom: 0.5 });
-      }
-   }, [screenWidth]);
-
-   const geoControlRef = useRef<mapboxgl.GeolocateControl>(null);
-
-   useEffect(() => {
-      // Activate as soon as the control is loaded
-      geoControlRef.current?.trigger();
-   }, [geoControlRef.current]);
-
+function MapUI({ viewState, handleViewChange, geoControlRef }: MapUIProps) {
    return (
       <div className='map'>
          <Map
             mapboxAccessToken={import.meta.env.VITE_MAPBOX_ACCESS_TOKEN as string}
             {...viewState}
-            onMove={(evt) => setViewState(evt.viewState)}
+            onMove={handleViewChange}
             style={{ width: "100%", height: "100%" }}
             mapStyle='mapbox://styles/mapbox/light-v10'
             projection={{ name: "globe" }}
