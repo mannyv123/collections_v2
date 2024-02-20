@@ -1,5 +1,6 @@
 import useMarkersData from "../../lib/hooks/useMarkersData";
 import MapUI from "../MapUI/MapUI";
+import PreviewFeature from "../PreviewFeature/PreviewFeature";
 import "./MapFeature.scss";
 import { useEffect, useRef, useState } from "react";
 import { ViewStateChangeEvent } from "react-map-gl";
@@ -45,6 +46,7 @@ function MapFeature() {
 
    return (
       <div className='map-container'>
+         <PreviewFeature />
          <MapUI
             viewState={viewState}
             handleViewChange={handleViewChange}
