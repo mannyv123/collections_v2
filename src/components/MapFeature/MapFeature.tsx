@@ -1,3 +1,4 @@
+import useMarkersData from "../../lib/hooks/useMarkersData";
 import MapUI from "../MapUI/MapUI";
 import "./MapFeature.scss";
 import { useEffect, useRef, useState } from "react";
@@ -40,12 +41,15 @@ function MapFeature() {
       geoControlRef.current?.trigger();
    }, [geoControlRef.current]);
 
+   const { markers } = useMarkersData();
+
    return (
       <div className='map-container'>
          <MapUI
             viewState={viewState}
             handleViewChange={handleViewChange}
             geoControlRef={geoControlRef}
+            imagePoints={markers}
          />
       </div>
    );

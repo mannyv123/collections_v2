@@ -7,9 +7,10 @@ type MapUIProps = {
    viewState: MapView;
    handleViewChange: (e: ViewStateChangeEvent) => void;
    geoControlRef: RefObject<mapboxgl.GeolocateControl>;
+   imagePoints: JSX.Element[];
 };
 
-function MapUI({ viewState, handleViewChange, geoControlRef }: MapUIProps) {
+function MapUI({ viewState, handleViewChange, geoControlRef, imagePoints }: MapUIProps) {
    return (
       <div className='map'>
          <Map
@@ -20,6 +21,7 @@ function MapUI({ viewState, handleViewChange, geoControlRef }: MapUIProps) {
             mapStyle='mapbox://styles/mapbox/light-v10'
             projection={{ name: "globe" }}
          >
+            {imagePoints}
             <GeolocateControl
                ref={geoControlRef}
                showUserLocation={true}
