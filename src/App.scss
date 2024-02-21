@@ -38,13 +38,11 @@ button {
 .content-container {
    width: 100%;
    height: 100%;
-
    overflow: hidden;
    margin-top: 3.25rem;
 
    @include desktop {
       margin-top: 4.1875rem;
+      padding: 0 3rem;
    }
-
-   padding: 0 3rem;
 }

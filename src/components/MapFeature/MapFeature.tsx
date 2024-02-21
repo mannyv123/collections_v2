@@ -4,8 +4,10 @@ import PreviewFeature from "../PreviewFeature/PreviewFeature";
 import "./MapFeature.scss";
 import { useEffect, useRef, useState } from "react";
 import { ViewStateChangeEvent } from "react-map-gl";
+import type { MapRef } from "react-map-gl";
 
 function MapFeature() {
+   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
    const [screenWidth, setScreenWidth] = useState(window.innerWidth);
    const [viewState, setViewState] = useState({
       latitude: 49.285283,
@@ -42,16 +44,28 @@ function MapFeature() {
       geoControlRef.current?.trigger();
    }, [geoControlRef.current]);
 
-   const { markers } = useMarkersData();
+   const handleMarkerSelect = () => {
+      setIsPreviewOpen((prev) => !prev);
+   };
+
+   const { markers } = useMarkersData({ handleMarkerSelect });
+
+   //TODO: update to use forwardref
+   const mapRef = useRef<MapRef>(null);
+
+   useEffect(() => {
+      mapRef.current?.resize();
+   }, [isPreviewOpen]);
 
    return (
       <div className='map-container'>
-         <PreviewFeature />
+         <PreviewFeature isPreviewOpen={isPreviewOpen} />
          <MapUI
             viewState={viewState}
             handleViewChange={handleViewChange}
             geoControlRef={geoControlRef}
             imagePoints={markers}
+            mapRef={mapRef}
          />
       </div>
    );

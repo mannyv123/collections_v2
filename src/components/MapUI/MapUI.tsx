@@ -2,18 +2,21 @@ import { RefObject } from "react";
 import { MapView } from "../../lib/types";
 import "./MapUI.scss";
 import Map, { GeolocateControl, ViewStateChangeEvent } from "react-map-gl";
+import type { MapRef } from "react-map-gl";
 
 type MapUIProps = {
    viewState: MapView;
    handleViewChange: (e: ViewStateChangeEvent) => void;
    geoControlRef: RefObject<mapboxgl.GeolocateControl>;
    imagePoints: JSX.Element[];
+   mapRef: RefObject<MapRef>;
 };
 
-function MapUI({ viewState, handleViewChange, geoControlRef, imagePoints }: MapUIProps) {
+function MapUI({ viewState, handleViewChange, geoControlRef, imagePoints, mapRef }: MapUIProps) {
    return (
       <div className='map'>
          <Map
+            ref={mapRef}
             mapboxAccessToken={import.meta.env.VITE_MAPBOX_ACCESS_TOKEN as string}
             {...viewState}
             onMove={handleViewChange}

@@ -3,9 +3,13 @@ import marker from "../../assets/icons/marker.png";
 import CollectionsIcon from "@mui/icons-material/Collections";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 
-function PreviewFeature() {
+type PreviewFeatureProps = {
+   isPreviewOpen: boolean;
+};
+
+function PreviewFeature({ isPreviewOpen }: PreviewFeatureProps) {
    return (
-      <section className='preview'>
+      <section className={`preview ${isPreviewOpen ? "preview--open" : "preview--closed"}`}>
          <div className='preview__info'>
             <div className='preview__info-item preview__info-item--location'>
                <img src={marker} alt='marker' className='preview__marker-icon' />

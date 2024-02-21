@@ -3,12 +3,33 @@
 
 .preview {
    background-color: transparent;
-   padding: 0.5rem;
    display: flex;
    flex-direction: column;
-   width: 29.125rem;
    flex-shrink: 0;
    gap: 1rem;
+
+   &--open {
+      padding: 0.5rem;
+      width: 29.125rem;
+
+      animation: slide-in 0.25s ease-in-out;
+
+      @keyframes slide-in {
+         from {
+            transform: translateX(-100%);
+            opacity: 0;
+         }
+         to {
+            transform: translateX(0);
+            opacity: 1;
+         }
+      }
+   }
+
+   &--closed {
+      overflow: hidden;
+      width: 0;
+   }
 
    &__info {
       display: flex;

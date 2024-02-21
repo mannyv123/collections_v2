@@ -4,7 +4,11 @@ import { Marker } from "react-map-gl";
 
 const API_URL = import.meta.env.VITE_API_URL as string;
 
-function useMarkersData() {
+type useMarkersDataProps = {
+   handleMarkerSelect: () => void;
+};
+
+function useMarkersData({ handleMarkerSelect }: useMarkersDataProps) {
    const [markersData, setMarkersData] = useState<MarkerData[]>([]);
 
    const getMarkersData = useCallback(async () => {
@@ -28,7 +32,12 @@ function useMarkersData() {
    const markers = useMemo(
       () =>
          markersData.map((marker) => (
-            <Marker key={marker.id} longitude={marker.location.x} latitude={marker.location.y} />
+            <Marker
+               key={marker.id}
+               longitude={marker.location.x}
+               latitude={marker.location.y}
+               onClick={handleMarkerSelect}
+            />
          )),
       [markersData],
    );
