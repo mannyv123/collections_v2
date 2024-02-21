@@ -40,9 +40,11 @@ button {
    height: 100%;
 
    overflow: hidden;
-   // margin-top: 3.25rem;
+   margin-top: 3.25rem;
 
-   // @include desktop {
-   //    margin-top: 4.1875rem;
-   // }
+   @include desktop {
+      margin-top: 4.1875rem;
+   }
+
+   padding: 0 3rem;
 }
