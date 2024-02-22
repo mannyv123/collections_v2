@@ -59,7 +59,7 @@ function MapFeature() {
 
    return (
       <div className='map-container'>
-         <PreviewFeature isPreviewOpen={isPreviewOpen} />
+         <PreviewFeature isPreviewOpen={isPreviewOpen} handleMarkerSelect={handleMarkerSelect} />
          <MapUI
             viewState={viewState}
             handleViewChange={handleViewChange}
