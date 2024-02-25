@@ -27,6 +27,7 @@ function useMarkersData({ handleMarkerSelect }: UseMarkersDataProps) {
                longitude={marker.location.x}
                latitude={marker.location.y}
                onClick={() => handleMarkerSelect(marker.collection_id, marker.id)}
+               style={{ cursor: "pointer" }}
             />
          )),
       [markersData, handleMarkerSelect],
