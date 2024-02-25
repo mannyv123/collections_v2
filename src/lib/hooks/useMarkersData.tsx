@@ -1,33 +1,23 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { MarkerData } from "../types";
 import { Marker } from "react-map-gl";
+import { getImageMarkers } from "../api";
 
-const API_URL = import.meta.env.VITE_API_URL as string;
-
-type useMarkersDataProps = {
-   handleMarkerSelect: () => void;
+type UseMarkersDataProps = {
+   handleMarkerSelect: (collectionId: string, imageId: string) => void;
 };
 
-function useMarkersData({ handleMarkerSelect }: useMarkersDataProps) {
+function useMarkersData({ handleMarkerSelect }: UseMarkersDataProps) {
    const [markersData, setMarkersData] = useState<MarkerData[]>([]);
 
-   const getMarkersData = useCallback(async () => {
-      const response = await fetch(`${API_URL}/images`, {
-         method: "GET",
-      });
-
-      if (!response.ok) {
-         throw new Error("Error fetching data");
-      }
-
-      const data = (await response.json()) as MarkerData[];
-
+   const getMarkerData = useCallback(async () => {
+      const data = await getImageMarkers();
       setMarkersData(data);
    }, []);
 
    useEffect(() => {
-      getMarkersData().catch((error) => console.log(error));
-   }, [getMarkersData]);
+      getMarkerData().catch((error) => console.log(error));
+   }, [getMarkerData]);
 
    const markers = useMemo(
       () =>
@@ -36,10 +26,10 @@ function useMarkersData({ handleMarkerSelect }: useMarkersDataProps) {
                key={marker.id}
                longitude={marker.location.x}
                latitude={marker.location.y}
-               onClick={handleMarkerSelect}
+               onClick={() => handleMarkerSelect(marker.collection_id, marker.id)}
             />
          )),
-      [markersData],
+      [markersData, handleMarkerSelect],
    );
 
    return { markers };

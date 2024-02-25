@@ -102,8 +102,15 @@
       width: 100%;
       height: 15.625rem;
       flex-shrink: 0;
-      background-color: gray; //temp
       border-radius: $rounded-corner;
+      overflow: hidden;
+   }
+
+   &__selected-image {
+      object-fit: cover;
+      object-position: center;
+      width: 100%;
+      height: 100%;
    }
 
    &__thumbnails {
@@ -111,12 +118,20 @@
       grid-template-columns: 1fr 1fr 1fr;
       gap: 0.3125rem;
       height: 100%;
+      width: 100%;
       overflow-y: auto;
    }
 
    &__thumbnail-card {
-      background-color: grey; //temp
-      height: 100px;
+      height: 6.25rem;
       border-radius: $rounded-corner;
+      overflow: hidden;
+   }
+
+   &__thumbnail-image {
+      object-fit: cover;
+      object-position: center;
+      width: 100%;
+      height: 100%;
    }
 }

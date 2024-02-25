@@ -2,11 +2,13 @@ import useMarkersData from "../../lib/hooks/useMarkersData";
 import MapUI from "../MapUI/MapUI";
 import PreviewFeature from "../PreviewFeature/PreviewFeature";
 import "./MapFeature.scss";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { ViewStateChangeEvent } from "react-map-gl";
 import type { MapRef } from "react-map-gl";
 
 function MapFeature() {
+   const [selectedCollection, setSelectedCollection] = useState("");
+   const [selectedImage, setSelectedImage] = useState<null | string>(null);
    const [isPreviewOpen, setIsPreviewOpen] = useState(false);
    const [screenWidth, setScreenWidth] = useState(window.innerWidth);
    const [viewState, setViewState] = useState({
@@ -44,9 +46,15 @@ function MapFeature() {
       geoControlRef.current?.trigger();
    }, [geoControlRef.current]);
 
-   const handleMarkerSelect = () => {
-      setIsPreviewOpen((prev) => !prev);
+   const handleMarkerSelect = (collectionId: string, imageId: string) => {
+      setSelectedCollection(collectionId);
+      setSelectedImage(imageId);
+      setIsPreviewOpen(true);
    };
+
+   const handlePreview = useCallback(() => {
+      setIsPreviewOpen(false);
+   }, []);
 
    const { markers } = useMarkersData({ handleMarkerSelect });
 
@@ -59,7 +67,12 @@ function MapFeature() {
 
    return (
       <div className='map-container'>
-         <PreviewFeature isPreviewOpen={isPreviewOpen} handleMarkerSelect={handleMarkerSelect} />
+         <PreviewFeature
+            isPreviewOpen={isPreviewOpen}
+            handlePreview={handlePreview}
+            selectedCollection={selectedCollection}
+            selectedImage={selectedImage}
+         />
          <MapUI
             viewState={viewState}
             handleViewChange={handleViewChange}

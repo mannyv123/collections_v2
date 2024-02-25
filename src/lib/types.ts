@@ -18,3 +18,21 @@ export type MarkerData = {
    collection_id: string;
    user_id: string;
 };
+
+// Collection
+export type Collection = {
+   id: string;
+   title: string;
+   description: string;
+   user_id: string;
+};
+
+// Collection with Username
+export interface UserCollection extends Collection {
+   username: string;
+}
+
+// Image with url
+export interface Image extends MarkerData {
+   imageUrl: string;
+}
