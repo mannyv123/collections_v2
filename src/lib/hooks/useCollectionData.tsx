@@ -7,24 +7,26 @@ type UseCollectionDataProps = {
 };
 
 function useCollectionData({ selectedCollection }: UseCollectionDataProps) {
-   const [collectionDetails, setCollectionDetails] = useState<UserCollection>();
+   const [collectionInfo, setCollectionInfo] = useState<UserCollection>();
    const [imageThumbnails, setImageThumbnails] = useState<Image[]>([]);
 
    useEffect(() => {
       void (async () => {
          const collectionData = await getCollectionDetails(selectedCollection);
-         setCollectionDetails(collectionData);
+         setCollectionInfo(collectionData);
       })();
    }, [selectedCollection]);
 
    useEffect(() => {
       void (async () => {
-         const thumbnails = await getThumbnails(selectedCollection);
-         setImageThumbnails(thumbnails);
+         if (selectedCollection) {
+            const thumbnails = await getThumbnails(selectedCollection);
+            setImageThumbnails(thumbnails);
+         }
       })();
    }, [selectedCollection]);
 
-   return { collectionDetails, imageThumbnails };
+   return { collectionInfo, imageThumbnails };
 }
 
 export default useCollectionData;

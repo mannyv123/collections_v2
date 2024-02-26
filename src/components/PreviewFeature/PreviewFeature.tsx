@@ -18,7 +18,7 @@ const PreviewFeature = memo(function PreviewFeature({
    selectedImage,
 }: PreviewFeatureProps) {
    const [currentImage, setCurrentImage] = useState<Image>();
-   const { collectionDetails, imageThumbnails } = useCollectionData({ selectedCollection });
+   const { collectionInfo, imageThumbnails } = useCollectionData({ selectedCollection });
 
    useEffect(() => {
       if (imageThumbnails) {
@@ -40,7 +40,7 @@ const PreviewFeature = memo(function PreviewFeature({
          handlePreview={handlePreview}
          handleSelectImage={handleSelectImage}
          currentImage={currentImage}
-         collectionDetails={collectionDetails}
+         collectionInfo={collectionInfo}
          filteredThumbnails={filteredThumbnails}
       />
    );

@@ -1,0 +1,29 @@
+@use "../../styles/partials/variables" as *;
+
+.details {
+   display: flex;
+   flex-direction: column;
+   gap: 0.5rem;
+
+   &__item {
+      display: flex;
+      gap: 1rem;
+
+      &--location {
+         align-items: center;
+      }
+   }
+
+   &__title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      border-radius: $rounded-corner;
+      overflow: hidden;
+      width: 100%;
+      height: 100%;
+   }
+
+   &__marker-icon {
+      height: 2.3125rem;
+   }
+}
