@@ -5,6 +5,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import ThumbnailCard from "../ThumbnailCard/ThumbnailCard";
 import { Image, UserCollection } from "../../lib/types";
 import "./PreviewUI.scss";
+import Loading from "../Loading/Loading";
 
 type PreviewUIProps = {
    isPreviewOpen: boolean;
@@ -32,11 +33,15 @@ function PreviewUI({
             <div className='preview__info'>
                <div className='preview__info-item preview__info-item--location'>
                   <img src={marker} alt='marker' className='preview__marker-icon' />
-                  {currentImage ? (
-                     <h3 className='preview__title'>
-                        {currentImage?.city}, {currentImage?.country}
-                     </h3>
-                  ) : null}
+                  <div className='preview__title'>
+                     {currentImage ? (
+                        <h3>
+                           {currentImage?.city}, {currentImage?.country}
+                        </h3>
+                     ) : (
+                        <Loading />
+                     )}
+                  </div>
                </div>
                <div className='preview__info-item'>
                   <div className='preview__info-item preview__info-item--collection-name'>
@@ -57,7 +62,9 @@ function PreviewUI({
                         src={currentImage.imageUrl}
                         alt='selected preview'
                      />
-                  ) : null}
+                  ) : (
+                     <Loading />
+                  )}
                </div>
                <div className='preview__thumbnail-container'>
                   {filteredThumbnails.map((image) => (

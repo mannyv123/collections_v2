@@ -1,0 +1,22 @@
+.loading {
+   background: linear-gradient(-90deg, #d9d9d9, #42495c, #d9d9d9, #42495c, #d9d9d9);
+   background-size: 400% 400%;
+   animation: gradient 2.5s ease-out infinite reverse;
+   height: 100%;
+   width: 100%;
+
+   @keyframes gradient {
+      0% {
+         opacity: 25%;
+         background-position: -100% 50%; /* Start from the left (-100%) */
+      }
+      50% {
+         opacity: 100%;
+         background-position: 0% 50%; /* Move to the right (0%) */
+      }
+      100% {
+         opacity: 25%;
+         background-position: 100% 50%; /* Move further right (100%) */
+      }
+   }
+}
