@@ -4,6 +4,7 @@ import CollectionsIcon from "@mui/icons-material/Collections";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import { Image, UserCollection } from "../../lib/types";
 import Loading from "../Loading/Loading";
+import { Link } from "react-router-dom";
 
 type CollectionDetailsProps = {
    currentImage: Image | undefined;
@@ -27,14 +28,23 @@ function CollectionDetails({ currentImage, collectionInfo, styles = "" }: Collec
             </div>
          </div>
          <div className='details__item'>
-            <div className='details__item details__item--collection-name'>
-               <CollectionsIcon fontSize='medium' />
-               {collectionInfo ? <p>{collectionInfo.title}</p> : null}
-            </div>
-            <div className='details__item details__info-item--user'>
-               <PersonOutlineIcon fontSize='medium' />
-               {collectionInfo ? <p>{collectionInfo.username}</p> : null}
-            </div>
+            {collectionInfo && currentImage ? (
+               <>
+                  <Link
+                     className='details__link'
+                     to={`/collection/${collectionInfo?.id}/image/${currentImage?.id}`}
+                  >
+                     <div className='details__collection-name'>
+                        <CollectionsIcon fontSize='medium' />
+                        <p>{collectionInfo.title}</p>
+                     </div>
+                  </Link>
+                  <div className='details__user'>
+                     <PersonOutlineIcon fontSize='medium' />
+                     <p>{collectionInfo.username}</p>
+                  </div>
+               </>
+            ) : null}
          </div>
       </div>
    );

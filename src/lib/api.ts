@@ -64,3 +64,24 @@ export const getThumbnails = async (collectionId: string) => {
       return [] as Image[];
    }
 };
+
+// Fetch single image
+export const getImage = async (imageId: string, size: "full" | "thumbnail") => {
+   try {
+      const response = await fetch(`${API_URL}/images/${imageId}?size=${size}`, {
+         method: "GET",
+      });
+
+      if (!response.ok) {
+         console.error("Error fetching data", response.statusText);
+         return {} as Image;
+      }
+
+      const data = (await response.json()) as Image;
+
+      return data;
+   } catch (error) {
+      console.error(error);
+      return {} as Image;
+   }
+};
