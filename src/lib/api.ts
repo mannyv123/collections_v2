@@ -1,4 +1,4 @@
-import { UserCollection, Image, MarkerData } from "./types";
+import { UserCollection, Image, MarkerData, Likes, Comments } from "./types";
 
 const API_URL = import.meta.env.VITE_API_URL as string;
 
@@ -83,5 +83,47 @@ export const getImage = async (imageId: string, size: "full" | "thumbnail") => {
    } catch (error) {
       console.error(error);
       return {} as Image;
+   }
+};
+
+// Get likes for image
+export const getLikes = async (imageId: string) => {
+   try {
+      const response = await fetch(`${API_URL}/images/${imageId}/likes`, {
+         method: "GET",
+      });
+
+      if (!response.ok) {
+         console.error("Error fetching data", response.statusText);
+         return [] as Likes[];
+      }
+
+      const data = (await response.json()) as Likes[];
+
+      return data;
+   } catch (error) {
+      console.error(error);
+      return [] as Likes[];
+   }
+};
+
+// Get comments for image
+export const getComments = async (imageId: string) => {
+   try {
+      const response = await fetch(`${API_URL}/images/${imageId}/comments`, {
+         method: "GET",
+      });
+
+      if (!response.ok) {
+         console.error("Error fetching data", response.statusText);
+         return [] as Comments[];
+      }
+
+      const data = (await response.json()) as Comments[];
+
+      return data;
+   } catch (error) {
+      console.error(error);
+      return [] as Comments[];
    }
 };

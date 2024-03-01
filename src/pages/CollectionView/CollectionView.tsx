@@ -6,6 +6,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Image } from "../../lib/types";
 import { getImage } from "../../lib/api";
 import ThumbnailCard from "../../components/ThumbnailCard/ThumbnailCard";
+import Loading from "../../components/Loading/Loading";
 
 function CollectionView() {
    const navigate = useNavigate();
@@ -34,7 +35,7 @@ function CollectionView() {
       <div className='collection'>
          <div className='collection__info'>
             <CollectionDetails currentImage={currentImage} collectionInfo={collectionInfo} />
-            <div className='collection__comments'>Comments</div>
+            <div className='collection__comments'>{}</div>
          </div>
          <div className='collection__images'>
             <div className='collection__main-image-container'>
@@ -47,13 +48,21 @@ function CollectionView() {
                ) : null}
             </div>
             <div className='collection__thumbnails'>
-               {filteredThumbnails.map((image) => (
-                  <ThumbnailCard
-                     key={image.id}
-                     image={image}
-                     handleSelectImage={handleSelectImage}
-                  />
-               ))}
+               {filteredThumbnails.length !== 0 ? (
+                  <>
+                     {filteredThumbnails.map((image) => (
+                        <ThumbnailCard
+                           key={image.id}
+                           image={image}
+                           handleSelectImage={handleSelectImage}
+                        />
+                     ))}
+                  </>
+               ) : (
+                  <div className='collection__thumb-loading'>
+                     <Loading />
+                  </div>
+               )}
             </div>
          </div>
       </div>

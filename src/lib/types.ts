@@ -36,3 +36,18 @@ export interface UserCollection extends Collection {
 export interface Image extends MarkerData {
    imageUrl: string;
 }
+
+// Likes
+export type Likes = {
+   id: string;
+   image_id: string;
+   user_id: string;
+};
+
+// Comments
+export type Comments = {
+   id: string;
+   comment: string;
+   image_id: string;
+   user_id: string;
+};
