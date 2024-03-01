@@ -1,0 +1,16 @@
+@use "../../styles/partials/mixins" as *;
+@use "../../styles/partials/variables" as *;
+
+.comment {
+   display: flex;
+   flex-direction: column;
+   gap: 0.5rem;
+   background-color: #d9d9d9;
+   padding: 0.5rem;
+   border-radius: $rounded-corner;
+
+   &__info-container {
+      display: flex;
+      justify-content: space-between;
+   }
+}

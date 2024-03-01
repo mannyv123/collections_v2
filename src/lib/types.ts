@@ -42,6 +42,8 @@ export type Likes = {
    id: string;
    image_id: string;
    user_id: string;
+   username: string;
+   created_at: string;
 };
 
 // Comments
@@ -50,4 +52,6 @@ export type Comments = {
    comment: string;
    image_id: string;
    user_id: string;
+   username: string;
+   created_at: string;
 };

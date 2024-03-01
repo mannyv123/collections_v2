@@ -1,12 +1,6 @@
-// will be used to provide details for a single image including
-// - full image
-// - likes count
-// - comments
-// - image location
-
 import { useEffect, useState } from "react";
-import { Image } from "../types";
-import { getImage } from "../api";
+import { Comments, Image, Likes } from "../types";
+import { getComments, getImage, getLikes } from "../api";
 
 type UseImageDataProps = {
    imageId: string;
@@ -14,15 +8,29 @@ type UseImageDataProps = {
 
 function useImageData({ imageId }: UseImageDataProps) {
    const [image, setImage] = useState<Image>();
+   const [likes, setLikes] = useState<Likes[]>([]);
+   const [comments, setComments] = useState<Comments[]>([]);
 
    useEffect(() => {
       void (async () => {
-         const newImage = await getImage(imageId, "full");
-         setImage(newImage);
+         const fullImage = await getImage(imageId, "full");
+         setImage(fullImage);
+
+         const imageLikes = await getLikes(imageId);
+         const sortedLikes = imageLikes.sort(
+            (a, b) => Date.parse(b.created_at) - Date.parse(a.created_at),
+         );
+         setLikes(sortedLikes);
+
+         const imageComments = await getComments(imageId);
+         const sortedComments = imageComments.sort(
+            (a, b) => Date.parse(b.created_at) - Date.parse(a.created_at),
+         );
+         setComments(sortedComments);
       })();
    }, [imageId]);
 
-   return { image };
+   return { image, likes, comments };
 }
 
 export default useImageData;

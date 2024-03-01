@@ -1,12 +1,11 @@
-import { useEffect, useState } from "react";
 import CollectionDetails from "../../components/CollectionDetails/CollectionDetails";
 import useCollectionData from "../../lib/hooks/useCollectionData";
 import "./CollectionView.scss";
 import { useParams, useNavigate } from "react-router-dom";
-import { Image } from "../../lib/types";
-import { getImage } from "../../lib/api";
 import ThumbnailCard from "../../components/ThumbnailCard/ThumbnailCard";
 import Loading from "../../components/Loading/Loading";
+import useImageData from "../../lib/hooks/useImageData";
+import CommentCard from "../../components/CommentCard/CommentCard";
 
 function CollectionView() {
    const navigate = useNavigate();
@@ -14,18 +13,11 @@ function CollectionView() {
       collectionId: string;
       imageId: string;
    }>();
-   const [currentImage, setCurrentImage] = useState<Image>();
 
    const { collectionInfo, imageThumbnails } = useCollectionData({ selectedCollection });
+   const { image: currentImage, comments } = useImageData({ imageId });
 
    const filteredThumbnails = imageThumbnails.filter((img) => img.id !== imageId);
-
-   useEffect(() => {
-      void (async () => {
-         const image = await getImage(imageId, "full");
-         setCurrentImage(image);
-      })();
-   }, [imageId]);
 
    const handleSelectImage = (imageId: string) => {
       navigate(`/collection/${selectedCollection}/image/${imageId}`);
@@ -35,7 +27,11 @@ function CollectionView() {
       <div className='collection'>
          <div className='collection__info'>
             <CollectionDetails currentImage={currentImage} collectionInfo={collectionInfo} />
-            <div className='collection__comments'>{}</div>
+            <div className='collection__comments'>
+               {comments.map((comment) => (
+                  <CommentCard key={comment.id} comment={comment} />
+               ))}
+            </div>
          </div>
          <div className='collection__images'>
             <div className='collection__main-image-container'>
@@ -43,7 +39,7 @@ function CollectionView() {
                   <img
                      className='collection__main-image'
                      src={currentImage.imageUrl}
-                     alt={currentImage?.name}
+                     alt={currentImage.name}
                   />
                ) : null}
             </div>
