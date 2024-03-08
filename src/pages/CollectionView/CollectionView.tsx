@@ -47,11 +47,9 @@ function CollectionView() {
                {filteredThumbnails.length !== 0 ? (
                   <>
                      {filteredThumbnails.map((image) => (
-                        <ThumbnailCard
-                           key={image.id}
-                           image={image}
-                           handleSelectImage={handleSelectImage}
-                        />
+                        <div key={image.id} className='collection__thumbnail-card-wrapper'>
+                           <ThumbnailCard image={image} handleSelectImage={handleSelectImage} />
+                        </div>
                      ))}
                   </>
                ) : (
