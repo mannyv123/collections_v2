@@ -20,6 +20,21 @@ function CollectionView() {
       navigate(`/collection/${selectedCollection}/image/${imageId}`);
    };
 
+   const handleNextImage = (increment: number) => {
+      const currentImageIndex = imageThumbnails.findIndex((image) => image.id === imageId);
+      let nextImageId: string;
+
+      if (currentImageIndex === imageThumbnails.length - 1 && increment === 1) {
+         nextImageId = imageThumbnails[0].id;
+      } else if (currentImageIndex === 0 && increment === -1) {
+         nextImageId = imageThumbnails[imageThumbnails.length - 1].id;
+      } else {
+         nextImageId = imageThumbnails[currentImageIndex + increment].id;
+      }
+
+      navigate(`/collection/${selectedCollection}/image/${nextImageId}`);
+   };
+
    return (
       <>
          <CollectionViewUI
@@ -28,9 +43,14 @@ function CollectionView() {
             comments={comments}
             filteredThumbnails={filteredThumbnails}
             handleSelectImage={handleSelectImage}
+            handleNextImage={handleNextImage}
          />
       </>
    );
 }
 
 export default CollectionView;
+
+//left off: need to add ability to click arrows to navigate through pictures;
+// using arrow keys on desktop or clicking
+// using swiping or clicking on mobile

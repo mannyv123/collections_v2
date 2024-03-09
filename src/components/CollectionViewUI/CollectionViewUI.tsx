@@ -4,6 +4,8 @@ import ThumbnailCard from "../../components/ThumbnailCard/ThumbnailCard";
 import Loading from "../../components/Loading/Loading";
 import CommentCard from "../../components/CommentCard/CommentCard";
 import { Comments, Image, UserCollection } from "../../lib/types";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 
 type CollectionViewUIProps = {
    currentImage: Image | undefined;
@@ -11,6 +13,7 @@ type CollectionViewUIProps = {
    comments: Comments[];
    filteredThumbnails: Image[];
    handleSelectImage: (imageId: string) => void;
+   handleNextImage: (increment: number) => void;
 };
 
 function CollectionViewUI({
@@ -19,6 +22,7 @@ function CollectionViewUI({
    comments,
    filteredThumbnails,
    handleSelectImage,
+   handleNextImage,
 }: CollectionViewUIProps) {
    return (
       <div className='collection'>
@@ -32,6 +36,21 @@ function CollectionViewUI({
          </div>
          <div className='collection__images'>
             <div className='collection__main-image-container'>
+               <div className='collection__navigation-container'>
+                  <div
+                     className='collection__nav-item collection__nav-item--prev'
+                     onClick={() => handleNextImage(-1)}
+                  >
+                     <NavigateBeforeIcon fontSize='large' />
+                  </div>
+                  <div
+                     className='collection__nav-item collection__nav-item--next'
+                     onClick={() => handleNextImage(1)}
+                  >
+                     {" "}
+                     <NavigateNextIcon fontSize='large' />
+                  </div>
+               </div>
                {currentImage ? (
                   <img
                      className='collection__main-image'
