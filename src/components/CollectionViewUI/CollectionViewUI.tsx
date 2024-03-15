@@ -6,6 +6,8 @@ import CommentCard from "../../components/CommentCard/CommentCard";
 import { Comments, Image, UserCollection } from "../../lib/types";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
+import FullImageFeature from "../FullImageFeature/FullImageFeature";
+import { MouseEvent } from "react";
 
 type CollectionViewUIProps = {
    currentImage: Image | undefined;
@@ -13,7 +15,9 @@ type CollectionViewUIProps = {
    comments: Comments[];
    filteredThumbnails: Image[];
    handleSelectImage: (imageId: string) => void;
-   handleNextImage: (increment: number) => void;
+   handleNextImage: (increment: number, e: MouseEvent<HTMLDivElement>) => void;
+   isFullImage: boolean;
+   handleExpandImage: () => void;
 };
 
 function CollectionViewUI({
@@ -23,9 +27,12 @@ function CollectionViewUI({
    filteredThumbnails,
    handleSelectImage,
    handleNextImage,
+   isFullImage,
+   handleExpandImage,
 }: CollectionViewUIProps) {
    return (
       <div className='collection'>
+         {isFullImage ? <FullImageFeature /> : null}
          <div className='collection__info'>
             <CollectionDetails currentImage={currentImage} collectionInfo={collectionInfo} />
             <div className='collection__comments'>
@@ -36,16 +43,16 @@ function CollectionViewUI({
          </div>
          <div className='collection__images'>
             <div className='collection__main-image-container'>
-               <div className='collection__navigation-container'>
+               <div className='collection__navigation-container' onClick={handleExpandImage}>
                   <div
                      className='collection__nav-item collection__nav-item--prev'
-                     onClick={() => handleNextImage(-1)}
+                     onClick={(e) => handleNextImage(-1, e)}
                   >
                      <NavigateBeforeIcon fontSize='large' />
                   </div>
                   <div
                      className='collection__nav-item collection__nav-item--next'
-                     onClick={() => handleNextImage(1)}
+                     onClick={(e) => handleNextImage(1, e)}
                   >
                      {" "}
                      <NavigateNextIcon fontSize='large' />
@@ -64,7 +71,10 @@ function CollectionViewUI({
                   <>
                      {filteredThumbnails.map((image) => (
                         <div key={image.id} className='collection__thumbnail-card-wrapper'>
-                           <ThumbnailCard image={image} handleSelectImage={handleSelectImage} />
+                           <ThumbnailCard
+                              image={image}
+                              handleSelectImage={() => handleSelectImage(image.id)}
+                           />
                         </div>
                      ))}
                   </>

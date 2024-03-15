@@ -64,6 +64,8 @@
       height: 100%;
       display: flex;
       justify-content: space-between;
+
+      cursor: pointer;
    }
 
    &__nav-item {
@@ -97,10 +99,12 @@
       width: 100%;
       object-fit: contain;
       object-position: center;
+      cursor: pointer;
    }
 
    &__thumbnails {
       display: none;
+
       @include desktop {
          display: flex;
          width: 100%;

@@ -2,9 +2,12 @@ import useCollectionData from "../../lib/hooks/useCollectionData";
 import "./CollectionView.scss";
 import { useParams, useNavigate } from "react-router-dom";
 import useImageData from "../../lib/hooks/useImageData";
-import CollectionViewUI from "../../components/CollectionViewUI/CollectionViewUi";
+import CollectionViewUI from "../../components/CollectionViewUI/CollectionViewUI";
+import { MouseEvent, useState } from "react";
 
 function CollectionView() {
+   const [isFullImage, setIsFullImage] = useState(false);
+
    const navigate = useNavigate();
    const { collectionId: selectedCollection = "", imageId = "" } = useParams<{
       collectionId: string;
@@ -20,7 +23,9 @@ function CollectionView() {
       navigate(`/collection/${selectedCollection}/image/${imageId}`);
    };
 
-   const handleNextImage = (increment: number) => {
+   const handleNextImage = (increment: number, e: MouseEvent<HTMLDivElement>) => {
+      e.stopPropagation();
+
       const currentImageIndex = imageThumbnails.findIndex((image) => image.id === imageId);
       let nextImageId: string;
 
@@ -35,6 +40,10 @@ function CollectionView() {
       navigate(`/collection/${selectedCollection}/image/${nextImageId}`);
    };
 
+   const handleExpandImage = () => {
+      setIsFullImage((prev) => !prev);
+   };
+
    return (
       <>
          <CollectionViewUI
@@ -44,13 +53,11 @@ function CollectionView() {
             filteredThumbnails={filteredThumbnails}
             handleSelectImage={handleSelectImage}
             handleNextImage={handleNextImage}
+            isFullImage={isFullImage}
+            handleExpandImage={handleExpandImage}
          />
       </>
    );
 }
 
 export default CollectionView;
-
-//left off: need to add ability to click arrows to navigate through pictures;
-// using arrow keys on desktop or clicking
-// using swiping or clicking on mobile
